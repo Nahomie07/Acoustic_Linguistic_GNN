@@ -78,7 +78,7 @@ def vgg_distance(spec1, spec2):
     # Compute Euclidean distance across feature dimensions
     euclidean_distance = torch.norm(spec1 - spec2, p=2, dim=1)
     
-    return euclidean_distance.item()  # Return tensor for flexibility
+    return torch.norm(euclidean_distance).item()  # Return tensor for flexibility
 
 # Function to compute DTW distance between two spectrograms using dtaidistance
 def compute_dtw_distance(spectrogram1, spectrogram2):
