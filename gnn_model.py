@@ -76,13 +76,13 @@ class GCN(nn.Module):
         super(GCN, self).__init__()
         self.flatten = nn.Flatten()
         self.cnn = CNN(conv_param=conv_param, hidden_units=hidden_units)
-        #self.conv1 = SAGEConv(hidden_units[-1], hidden_size, 'mean')
-        self.conv1 = SAGEConv(in_feats, hidden_size, 'mean')
+        self.conv1 = SAGEConv(hidden_units[-1], hidden_size, 'mean') #je viens de décommenter
+        #self.conv1 = SAGEConv(in_feats, hidden_size, 'mean') je viens de commenter
         self.conv2 = SAGEConv(hidden_size, num_classes, 'mean')
 
     def forward(self, g, features, edge_weights):
-        #x = self.cnn(features.unsqueeze(1)).squeeze(1)
-        x = self.flatten(features)
+        x = self.cnn(features.unsqueeze(1)).squeeze(1) #je viens de décommenter
+        #x = self.flatten(features) je viens de commenter
         x = F.relu(self.conv1(g, x, edge_weights))
         x = self.conv2(g, x, edge_weights)
         return x
